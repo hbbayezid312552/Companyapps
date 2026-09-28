@@ -1,0 +1,12 @@
+{
+  "appId": "com.smartinvoice.manager",
+  "appName": "Smart Invoice Manager",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}

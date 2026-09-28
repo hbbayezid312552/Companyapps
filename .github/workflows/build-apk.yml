@@ -1,0 +1,57 @@
+name: Build Android APK (100% Free CI/CD)
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    name: Build Free Android Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install App Dependencies
+        run: |
+          npm ci || npm install
+          npm install -D @capacitor/core @capacitor/cli @capacitor/android
+
+      - name: Build Web Production Assets
+        run: npm run build
+
+      - name: Initialize Capacitor Android Project
+        run: |
+          npx cap init "Smart Invoice Manager" "com.smartinvoice.manager" --web-dir dist
+          npx cap add android
+          npx cap sync android
+
+      - name: Build Android APK with Gradle
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmartInvoiceManager-Debug-APK
+          path: android/app/build/outputs/apk/debug/*.apk
+          retention-days: 30

@@ -1,0 +1,6 @@
+{
+  "name": "Smart Invoice Manager",
+  "description": "স্মার্ট ইনভয়েস ও ডিলার ম্যানেজমেন্ট সিস্টেম - Complete Free & Offline-First Android Invoice & Dealer Management App with Excel-style product tables, auto percentage calculations, PDF & print export, and backup/restore.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
